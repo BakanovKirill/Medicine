@@ -1,0 +1,77 @@
+[
+    {
+        "pk": 1,
+        "model": "medicine.patient",
+        "fields": {
+            "name": "Bob",
+            "surname": "Marley",
+            "date_of_birth": "2000-05-01",
+            "email": "bob@example.com",
+            "phone": "+380506661234"
+        }
+    },
+    {
+        "pk": 2,
+        "model": "medicine.patient",
+        "fields": {
+            "name": "Chris",
+            "surname": "Dawn",
+            "date_of_birth": "1970-05-04",
+            "email": "dawn@example.com",
+            "phone": "+380961665234"
+        }
+    },
+    {
+        "pk": 1,
+        "model": "medicine.doctor",
+        "fields": {
+            "name": "John",
+            "surname": "Dwen",
+            "patients": [1]
+        }
+    },
+    {
+        "pk": 1,
+        "model": "medicine.doctor",
+        "fields": {
+            "name": "John",
+            "surname": "Dwen",
+            "patients": [1]
+        }
+    },
+    {
+        "pk": 2,
+        "model": "medicine.doctor",
+        "fields": {
+            "name": "Julie",
+            "surname": "Osborn",
+            "patients": [2, 1]
+        }
+    },
+    {
+        "pk": 3,
+        "model": "medicine.doctor",
+        "fields": {
+            "name": "Garry",
+            "surname": "Stuart",
+            "patients": []
+        }
+    },
+    {
+        "pk": 1,
+        "model": "medicine.hospital",
+        "fields": {
+            "title": "St. Savor",
+            "doctors": [1, 2]
+        }
+    },
+    {
+        "pk": 2,
+        "model": "medicine.hospital",
+        "fields": {
+            "title": "Private Clinic",
+            "doctors": [1, 2, 3]
+        }
+    }
+
+]
