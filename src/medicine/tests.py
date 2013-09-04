@@ -72,7 +72,8 @@ class AuthTest(TestCase):
         self.assertTrue(DatabaseQuery.objects.all().count() > 0)
         #check that settings is within context
         self.assertContains(index_response, 'medicine.wsgi.application')
-
+        #check that template tag works ok
+        self.assertContains(index_response, '<a href="/admin/medicine/hospital/1/">St. Savor</a>')
 
 def test_profile_edit(self):
         self.client.login(username='sun', password='admin')
