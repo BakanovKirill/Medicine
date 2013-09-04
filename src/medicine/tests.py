@@ -5,9 +5,10 @@ when you run "manage.py test".
 Replace this with more appropriate tests for your application.
 """
 from django.core.urlresolvers import reverse
-
+from django.core.management import call_command
 from django.test import TestCase
 from django.test.utils import override_settings
+
 from medicine.models import *
 
 
@@ -101,3 +102,12 @@ def test_profile_edit(self):
         #Error displayed
         self.assertContains(error_response, 'This field is required')
 
+
+class CommandTest(TestCase):
+    fixtures = ['initial.json', 'test_data.json']
+
+    def test_command(self):
+        try:
+            call_command('print_patients')
+        except Exception:
+            raise AssertionError('Command calling exception')
