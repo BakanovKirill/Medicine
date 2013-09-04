@@ -11,8 +11,7 @@ class Command(BaseCommand):
     help = 'Prints all patients from database to console'
     
     def handle(self, nodelete=False, *args, **options):
-        
+        print('Patients list:\n')
         for patient in Patient.objects.all():
             #Print patients
-            print('Patients list:\n')
             print(patient)
