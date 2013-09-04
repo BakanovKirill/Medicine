@@ -1,3 +1,21 @@
+INSTALLATION
+============
+
+Download and execute::
+
+    $ python bootstrap.py
+    $ bin/buildout
+
+The above commands will download all needed packages and create database with default data loaded from fixtures.
+
+To run application::
+
+    $ bin/django runserver
+
+
+TASKS OVERVIEW
+==============
+
 Medicine test project to complete tasks:
  
 # create django project. 
