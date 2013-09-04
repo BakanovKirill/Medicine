@@ -1,0 +1,10 @@
+{% if patients %}
+Patients:
+<ul>
+{% for p in patients %}
+    <li>{{ p.user.first_name }} {{ p.user.last_name }}, {{ p.phone }}</li>
+{% endfor %}
+</ul>
+{% else %}
+    No patients of this doctor
+{% endif %}

@@ -1,18 +1,22 @@
 # Create your views here.
+import json
 from django.core.urlresolvers import reverse
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.template.response import TemplateResponse
 
 from medicine.forms import PatientEditForm
+from medicine.models import Hospital, Doctor
+
 
 @login_required
 def index(request):
     template = 'index.html'
-    return render_to_response(template, {}, context_instance=RequestContext(request))
+    hospitals = Hospital.objects.all()
+    return render_to_response(template, {'hospitals': hospitals}, context_instance=RequestContext(request))
 
 @login_required
 def edit_profile(request):
@@ -29,3 +33,12 @@ def edit_profile(request):
         form = PatientEditForm(instance=request.user.patient)
 
     return TemplateResponse(request, template, {'form': form})
+
+
+def ajax_patients_list(request, doctor_id):
+    template='patients_list.html'
+    if request.is_ajax():
+        patients = Doctor.objects.get(pk=doctor_id).patients.all()
+        return TemplateResponse(request, template, {'patients': patients})
+    else:
+        return HttpResponseRedirect(reverse('index'))
