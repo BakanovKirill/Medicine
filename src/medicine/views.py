@@ -26,4 +26,4 @@ def edit_profile(request):
     else:
         form = PatientEditForm(instance=request.user.patient)
 
-    return TemplateResponse(request,template,{'form': form})
+    return TemplateResponse(request, template, {'form': form})
