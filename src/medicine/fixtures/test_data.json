@@ -78,6 +78,15 @@
         }
     },
     {
+        "pk": 4,
+        "model": "medicine.patient",
+        "fields": {
+            "date_of_birth": "1991-02-01",
+            "phone": "+38066565234",
+            "user": 1
+        }
+    },
+    {
         "pk": 1,
         "model": "medicine.doctor",
         "fields": {
