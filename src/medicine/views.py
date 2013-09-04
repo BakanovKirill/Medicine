@@ -3,6 +3,8 @@ from django.core.urlresolvers import reverse
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
+from django.shortcuts import render_to_response
+from django.template import RequestContext
 from django.template.response import TemplateResponse
 
 from medicine.forms import PatientEditForm
@@ -10,7 +12,7 @@ from medicine.forms import PatientEditForm
 @login_required
 def index(request):
     template = 'index.html'
-    return TemplateResponse(request, template, {})
+    return render_to_response(template, {}, context_instance=RequestContext(request))
 
 @login_required
 def edit_profile(request):
