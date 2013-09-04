@@ -70,6 +70,8 @@ class AuthTest(TestCase):
         self.assertContains(profile_response, '380961665234')
         #Test that middleware worked and saved a lot of queries
         self.assertTrue(DatabaseQuery.objects.all().count() > 0)
+        #check that settings is within context
+        self.assertContains(index_response, 'medicine.wsgi.application')
 
 
 def test_profile_edit(self):

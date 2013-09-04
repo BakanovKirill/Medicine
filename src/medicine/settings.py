@@ -129,6 +129,7 @@ INSTALLED_APPS = (
 TEMPLATE_CONTEXT_PROCESSORS = global_settings.TEMPLATE_CONTEXT_PROCESSORS + (
     'django.core.context_processors.request',
     'django.core.context_processors.csrf',
+    'medicine.context_processors.settings',
 )
 
 LOGIN_URL = '/login/'
