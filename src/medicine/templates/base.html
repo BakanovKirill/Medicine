@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{% block title %}Medicine{% endblock %}</title>
+{% block head %}{% endblock %}
+</head>
+<body>
+    {% block header %}
+        <div>Hello, <a href="{% url 'edit_profile' %}">{{ user.first_name }} {{ user.last_name }}</a>,
+            <a href="{% url 'django.contrib.auth.views.logout' %}">Logout</a>
+        </div>
+    {% endblock %}
+    {% block content %}{% endblock %}
+</body>
+</html>
