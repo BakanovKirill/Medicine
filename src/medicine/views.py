@@ -52,7 +52,7 @@ def add_doctor(request):
             return TemplateResponse(request, template, {'form': form})
     return HttpResponseRedirect(reverse('index'))
 
-
+@login_required
 def ajax_patients_list(request, doctor_id):
     template = 'patients_list.html'
     if request.is_ajax():

@@ -9,6 +9,7 @@
 </head>
 <body>
     {% block header %}
+        <a href="{% url 'index' %}" id="home">HOME</a>
         <div>Hello, <a href="{% url 'edit_profile' %}">{{ user.first_name }} {{ user.last_name }}</a>,
             <a href="{% url 'django.contrib.auth.views.logout' %}">Logout</a>
         </div>

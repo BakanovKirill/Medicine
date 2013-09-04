@@ -1,9 +1,17 @@
-.hospital{
+.hospital {
     margin-left: 50px;
 }
-.doctors-title{
+
+.doctors-title {
     margin-left: 20px;
 }
-.doctors{
+
+.doctors {
     margin-left: 20px;
+}
+
+#home {
+    font-weight: bold;
+    float: right;
+    position: relative;
 }

@@ -11,7 +11,7 @@ from django.test.utils import override_settings
 
 from medicine.models import *
 
-
+# Testing models present and loaded, test relations and proper values for some fields
 class ModelsTest(TestCase):
     fixtures = ['initial.json', 'test_data.json']
 
@@ -23,6 +23,7 @@ class ModelsTest(TestCase):
         self.assertEqual(len(self.patients), 4)
         self.assertEqual(len(self.hospitals), 2)
 
+    # test relations set correctly
     def test_patients_doctors_hospitals(self):
         self.assertIn(Doctor.objects.filter(name="John")[0], self.patients[0].doctors.all())
         self.assertIn(Hospital.objects.get(pk=1), self.doctors[0].hospitals.all())
@@ -42,6 +43,7 @@ class ModelsTest(TestCase):
         self.assertEqual(new_doc.name, self.hospitals[1].doctors.all()[3].name)
 
 
+#Test authentication and depending on authentication methods and views
 class AuthTest(TestCase):
     fixtures = ['initial.json', 'test_data.json']
 
@@ -76,6 +78,8 @@ class AuthTest(TestCase):
         #check that template tag works ok
         self.assertContains(index_response, '<a href="/admin/medicine/hospital/1/">St. Savor</a>')
 
+
+#Test profile edit form responses
 def test_profile_edit(self):
         self.client.login(username='sun', password='admin')
         profile_response = self.client.get(reverse('edit_profile'))
@@ -103,6 +107,7 @@ def test_profile_edit(self):
         self.assertContains(error_response, 'This field is required')
 
 
+#Test django management command. Or attempt to test it..
 class CommandTest(TestCase):
     fixtures = ['initial.json', 'test_data.json']
 
