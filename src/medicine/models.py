@@ -1,16 +1,14 @@
+from django.contrib.auth.models import User
 from django.db import models
 
 
 class Patient(models.Model):
-    name = models.CharField(max_length=100)
-    surname = models.CharField(max_length=100)
+    user = models.OneToOneField(User, null=True, parent_link=True)
     date_of_birth = models.DateField(blank=True, null=True)
-    email = models.EmailField(blank=True)
     phone = models.CharField(blank=True, max_length=13)
 
     def __unicode__(self):
-        return '%s %s' % (self.name, self.surname)
-
+        return '%s %s' % (self.user.first_name, self.user.last_name)
 
 class Doctor(models.Model):
     name = models.CharField(max_length=100)
