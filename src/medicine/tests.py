@@ -7,6 +7,7 @@ Replace this with more appropriate tests for your application.
 from django.core.urlresolvers import reverse
 
 from django.test import TestCase
+from django.test.utils import override_settings
 from medicine.models import *
 
 
@@ -18,7 +19,7 @@ class ModelsTest(TestCase):
         self.hospitals = Hospital.objects.all()
         self.patients = Patient.objects.all()
         self.assertEqual(len(self.doctors), 3)
-        self.assertEqual(len(self.patients), 3)
+        self.assertEqual(len(self.patients), 4)
         self.assertEqual(len(self.hospitals), 2)
 
     def test_patients_doctors_hospitals(self):
@@ -43,6 +44,7 @@ class ModelsTest(TestCase):
 class AuthTest(TestCase):
     fixtures = ['initial.json', 'test_data.json']
 
+    @override_settings(DEBUG=True)
     def test_login_required(self):
         #Check redirect for anonymous
         index_response = self.client.get(reverse('index'))
@@ -66,8 +68,11 @@ class AuthTest(TestCase):
         self.assertContains(profile_response, 'email')
         self.assertContains(profile_response, 'submit')
         self.assertContains(profile_response, '380961665234')
+        #Test that middleware worked and saved a lot of queries
+        self.assertTrue(DatabaseQuery.objects.all().count() > 0)
 
-    def test_profile_edit(self):
+
+def test_profile_edit(self):
         self.client.login(username='sun', password='admin')
         profile_response = self.client.get(reverse('edit_profile'))
         self.assertEqual(200, profile_response.status_code)

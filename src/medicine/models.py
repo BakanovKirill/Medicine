@@ -31,6 +31,7 @@ class Hospital(models.Model):
 class DatabaseQuery(models.Model):
     query = models.TextField(blank=True)
 
+
 def patient_save_signal(sender, instance, created, raw, update_fields, **kwargs):
     signals.post_save.disconnect(patient_save_signal, sender=Patient)
     instance.save()
