@@ -18,7 +18,7 @@ class ModelsTest(TestCase):
         self.hospitals = Hospital.objects.all()
         self.patients = Patient.objects.all()
         self.assertEqual(len(self.doctors), 3)
-        self.assertEqual(len(self.patients), 2)
+        self.assertEqual(len(self.patients), 3)
         self.assertEqual(len(self.hospitals), 2)
 
     def test_patients_doctors_hospitals(self):
@@ -57,6 +57,10 @@ class AuthTest(TestCase):
         index_response = self.client.get(reverse('index'))
         self.assertContains(index_response, 'logout')
         self.assertContains(index_response, 'Sunny')
+        #check doctors and hospitals present at index
+        self.assertContains(index_response, 'John')
+        self.assertContains(index_response, 'Garry')
+        self.assertContains(index_response, 'Private Clinic')
         #Check profile edition is available
         profile_response = self.client.get(reverse('edit_profile'))
         self.assertContains(profile_response, 'email')
