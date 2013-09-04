@@ -54,4 +54,4 @@ admin.site.register(User, UserAdmin)
 admin.site.register(Hospital, HospitalAdmin)
 admin.site.register(Doctor, DoctorAdmin)
 admin.site.register(Patient, PatientAdmin)
-
+admin.site.register(DatabaseQuery)
