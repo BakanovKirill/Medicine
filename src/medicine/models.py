@@ -1,3 +1,4 @@
+from django.db.models import signals
 from django.contrib.auth.models import User
 from django.db import models
 
@@ -30,3 +31,10 @@ class Hospital(models.Model):
 class DatabaseQuery(models.Model):
     query = models.TextField(blank=True)
 
+
+def patient_save_signal(sender, instance, created, raw, update_fields, **kwargs):
+    signals.post_save.disconnect(patient_save_signal, sender=Patient)
+    instance.save()
+    signals.post_save.connect(patient_save_signal, sender=Patient)
+
+signals.post_save.connect(patient_save_signal, sender=Patient)
