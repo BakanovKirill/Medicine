@@ -14,6 +14,7 @@ from medicine.models import Hospital, Doctor
 
 @login_required
 def index(request):
+    """Index view to display hospitals, doctors and patients"""
     template = 'index.html'
     hospitals = Hospital.objects.all()
     return render_to_response(template, {'hospitals': hospitals}, context_instance=RequestContext(request))
@@ -21,6 +22,8 @@ def index(request):
 
 @login_required
 def edit_profile(request):
+    """View to display form for editing patient-user profile and saving it"""
+
     template = 'edit_profile.html'
     if request.method == 'POST': # If the form has been submitted...
         form = PatientEditForm(request.POST, instance=request.user.patient) # A form bound to the POST data
@@ -38,6 +41,8 @@ def edit_profile(request):
 
 @login_required
 def add_doctor(request):
+    """View to create new doctor instance. Is to be displayed to staff and superuser only"""
+
     template = 'doctor_adding_form.html'
     #Check this in case url was typed directly in browser
     if request.user.is_staff and request.user.is_superuser:
@@ -54,6 +59,8 @@ def add_doctor(request):
 
 @login_required
 def ajax_patients_list(request, doctor_id):
+    """Ajax view returns patients list template rendered for given doctor_id"""
+
     template = 'patients_list.html'
     if request.is_ajax():
         patients = Doctor.objects.get(pk=doctor_id).patients.all()

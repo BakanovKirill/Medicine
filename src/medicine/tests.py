@@ -11,8 +11,9 @@ from django.test.utils import override_settings
 
 from medicine.models import *
 
-# Testing models present and loaded, test relations and proper values for some fields
+
 class ModelsTest(TestCase):
+    """Testing models present and loaded, test relations and proper values for some fields"""
     fixtures = ['initial.json', 'test_data.json']
 
     def setUp(self):
@@ -23,8 +24,9 @@ class ModelsTest(TestCase):
         self.assertEqual(len(self.patients), 4)
         self.assertEqual(len(self.hospitals), 2)
 
-    # test relations set correctly
     def test_patients_doctors_hospitals(self):
+        """test relations set correctly"""
+
         self.assertIn(Doctor.objects.filter(name="John")[0], self.patients[0].doctors.all())
         self.assertIn(Hospital.objects.get(pk=1), self.doctors[0].hospitals.all())
         self.assertNotIn(self.doctors[2], self.hospitals[0].doctors.all())
@@ -43,8 +45,9 @@ class ModelsTest(TestCase):
         self.assertEqual(new_doc.name, self.hospitals[1].doctors.all()[3].name)
 
 
-#Test authentication and depending on authentication methods and views
 class AuthTest(TestCase):
+    """Test authentication and depending on authentication methods and views"""
+
     fixtures = ['initial.json', 'test_data.json']
 
     @override_settings(DEBUG=True)
@@ -79,36 +82,38 @@ class AuthTest(TestCase):
         self.assertContains(index_response, '<a href="/admin/medicine/hospital/1/">St. Savor</a>')
 
 
-#Test profile edit form responses
 def test_profile_edit(self):
-        self.client.login(username='sun', password='admin')
-        profile_response = self.client.get(reverse('edit_profile'))
-        self.assertEqual(200, profile_response.status_code)
-        #Correct data
-        response = self.client.post('/profiles/edit/',
-                                    {
-                                        'first_name': 'asd',
-                                        'last_name': 'fre',
-                                        'email': 'asd@asd.com',
-                                        'phone': '12356',
-                                        'date_of_birth': '1991-02-01'
-                                    })
-        #Redirect to index
-        self.assertEqual(302, response.status_code)
-        #Missing field data
-        error_response = self.client.post('/profiles/edit/',
-                                    {
-                                        'first_name': 'asd',
-                                        'last_name': 'fre',
-                                        'email': 'asd@asd.com',
-                                        'phone': '12356',
-                                    })
-        #Error displayed
-        self.assertContains(error_response, 'This field is required')
+    """Test profile edit form responses"""
+
+    self.client.login(username='sun', password='admin')
+    profile_response = self.client.get(reverse('edit_profile'))
+    self.assertEqual(200, profile_response.status_code)
+    #Correct data
+    response = self.client.post('/profiles/edit/',
+                                {
+                                    'first_name': 'asd',
+                                    'last_name': 'fre',
+                                    'email': 'asd@asd.com',
+                                    'phone': '12356',
+                                    'date_of_birth': '1991-02-01'
+                                })
+    #Redirect to index
+    self.assertEqual(302, response.status_code)
+    #Missing field data
+    error_response = self.client.post('/profiles/edit/',
+                                      {
+                                          'first_name': 'asd',
+                                          'last_name': 'fre',
+                                          'email': 'asd@asd.com',
+                                          'phone': '12356',
+                                      })
+    #Error displayed
+    self.assertContains(error_response, 'This field is required')
 
 
-#Test django management command. Or attempt to test it..
 class CommandTest(TestCase):
+    """Test django management command. Or attempt to test it.."""
+
     fixtures = ['initial.json', 'test_data.json']
 
     def test_command(self):
