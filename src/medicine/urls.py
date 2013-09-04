@@ -15,7 +15,9 @@ urlpatterns = patterns('',
 
     url(r'^profiles/edit/', 'medicine.views.edit_profile',
         name='edit_profile'),
+
+    url(r'^ajax/patients/(?P<doctor_id>\d+)/$', 'medicine.views.ajax_patients_list', {}, name="ajax_patients_list"),
+
     url(r'^admin/', include(admin.site.urls)),
 
-    (r'^admin/jsi18n', 'django.views.i18n.javascript_catalog'),
 )

@@ -1,2 +1,54 @@
 {% extends "base.html" %}
-{% block content %}{% endblock %}
+{% block head %}
+    <script type="text/javascript" src="{{ STATIC_URL }}js/list.min.js"></script>
+{% endblock %}
+{% block content %}
+    <div class="content">
+        {% if hospitals %}
+            Hospitals:
+            {% for hospital in hospitals %}
+                <div class="hospital">
+                    Title: {{ hospital.title }} <br/>
+                    {% if hospital.doctors.all.count > 0 %}
+                        <h3 class="doctors-title">Doctors:</h3>
+                        <ul class="doctors">
+
+                            {% for doctor in hospital.doctors.all %}
+                                <li><a href='{% url 'ajax_patients_list' doctor.id %}' class="doctor-link" data-id="{{ doctor.id }}">{{ doctor.name }} {{ doctor.surname }}</a></li>
+                            {% endfor %}
+                        </ul>
+                    {% else %}
+                        No doctors in this hospital
+                    {% endif %}
+                </div>
+            {% endfor %}
+            <div class="patients-list"></div>
+        {% else %}
+            No hospitals
+        {% endif %}
+
+    </div>
+    <script type="text/javascript">
+        $().ready(function () {
+            var asc = true;
+            var options = {
+                valueNames: [ 'name', 'last-name' ]
+            };
+            $('.doctor-link').click(function (e) {
+                e.preventDefault();
+                $.get($(this).attr('href'),function(data){
+                    $('.patients-list').html(data);
+                    var patientsList = new List('patients-list', options);
+                    $('.sort').click(function(e){
+                        e.preventDefault();
+                        patientsList.sort($(this).data().sort, {asc: asc});
+                        asc=!asc
+                    });
+                });
+            });
+
+
+
+        });
+    </script>
+{% endblock %}

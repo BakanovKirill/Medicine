@@ -34,6 +34,23 @@
         }
     },
     {
+        "pk": 4,
+        "model": "auth.user",
+        "fields": {
+            "username": "Xen",
+            "first_name": "Xin",
+            "last_name": "Pufman",
+            "is_active": true,
+            "is_superuser": false,
+            "is_staff": false,
+            "date_joined": "2013-01-09",
+            "groups": [],
+            "user_permissions": [],
+            "password": "sha1$1fcb3$8df119b3ac1f36c936a6ee3d99b50908a516f276",
+            "email": "xen@example.com"
+        }
+    },
+    {
         "pk": 1,
         "model": "medicine.patient",
         "fields": {
@@ -49,6 +66,15 @@
             "date_of_birth": "1970-05-04",
             "phone": "+380961665234",
             "user": 2
+        }
+    },
+    {
+        "pk": 3,
+        "model": "medicine.patient",
+        "fields": {
+            "date_of_birth": "1970-07-04",
+            "phone": "+380662665234",
+            "user": 4
         }
     },
     {
@@ -75,7 +101,7 @@
         "fields": {
             "name": "Julie",
             "surname": "Osborn",
-            "patients": [2, 1]
+            "patients": [2, 1, 3]
         }
     },
     {

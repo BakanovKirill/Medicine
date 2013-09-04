@@ -2,7 +2,10 @@
 <html>
 <head>
     <title>{% block title %}Medicine{% endblock %}</title>
-{% block head %}{% endblock %}
+    <link href="{{ STATIC_URL }}css/style.css" type="text/css" media="all" rel="stylesheet" />
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.js"></script>
+    {% block head %}{% endblock %}
+
 </head>
 <body>
     {% block header %}
