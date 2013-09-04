@@ -11,6 +11,8 @@ from medicine.models import Patient, Doctor, Hospital
 
 
 class PatientEditForm(forms.ModelForm):
+    """Form to edit and save patient instance with related user"""
+
     first_name = forms.CharField(required=True)
     last_name = forms.CharField(required=True)
     email = forms.EmailField(label=_('Contact email:'), required=True)
@@ -32,11 +34,14 @@ class PatientEditForm(forms.ModelForm):
 
     def clean_phone(self):
         phone = self.cleaned_data.get('phone', '')
+        #Just in case user types something larger and obviously NOT a phone number.
         if len(phone) > 12:
             raise forms.ValidationError('Phone number length is incorrect!')
         return phone
 
     def clean_email(self):
+        """Check that email isn't duplicated"""
+
         email = self.cleaned_data['email']
         try:
             user = User.objects.get(email=email)
@@ -47,6 +52,8 @@ class PatientEditForm(forms.ModelForm):
         return email
 
     def save(self, *args, **kwargs):
+        """Update related user while saving patient instance"""
+
         super(PatientEditForm, self).save(*args, **kwargs)
         self.instance.user.first_name = self.cleaned_data.get('first_name')
         self.instance.user.last_name = self.cleaned_data.get('last_name')
@@ -58,6 +65,8 @@ class PatientEditForm(forms.ModelForm):
 
 
 class PatientUserCreationForm(UserCreationForm):
+    """Little change to the User creation form. Displayed at Django admin interface when adding a new user"""
+
     class Meta:
         model = User
         fields = ['email', 'password1', 'password2', 'first_name', 'last_name', 'username']
@@ -78,10 +87,13 @@ class PatientUserCreationForm(UserCreationForm):
 
 
 class DoctorForm(forms.ModelForm):
+    """Form to add new doctor instance"""
+
     class Meta:
         model = Doctor
         fields = ('name', 'surname', 'patients',)
 
+    #include hospitals as choice field, because reverse relation can't be auto-included
     hospitals = ModelMultipleChoiceField(
         queryset=Hospital.objects.all(),
         required=False,
@@ -89,6 +101,8 @@ class DoctorForm(forms.ModelForm):
         )
 
     def save(self, *args, **kwargs):
+        """Loop over hospitals to add them to related manager to save properly"""
+
         super(DoctorForm, self).save(*args, **kwargs)
         for hospital in self.cleaned_data.get('hospitals'):
             hospital.doctors.add(self.instance)
