@@ -1,10 +1,20 @@
 {% if patients %}
-Patients:
-<ul>
-{% for p in patients %}
-    <li>{{ p.user.first_name }} {{ p.user.last_name }}, {{ p.phone }}</li>
-{% endfor %}
-</ul>
+    Patients:
+    <ul class="sort-by">
+        <li class="sort" data-sort="name"><a href="#">Sort by name</a></li>
+        <li class="sort" data-sort="last-name"><a href="#">Sort by last name</a></li>
+    </ul>
+    <div id="patients-list">
+        <ul class="list">
+            {% for p in patients %}
+                <li>
+                    <span class="name">{{ p.user.first_name }}</span>
+                    <span class="last-name">{{ p.user.last_name }}</span>,
+                    {{ p.phone }}
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
 {% else %}
     No patients of this doctor
 {% endif %}

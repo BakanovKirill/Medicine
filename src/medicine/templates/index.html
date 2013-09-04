@@ -1,4 +1,7 @@
 {% extends "base.html" %}
+{% block head %}
+    <script type="text/javascript" src="{{ STATIC_URL }}js/list.min.js"></script>
+{% endblock %}
 {% block content %}
     <div class="content">
         {% if hospitals %}
@@ -27,13 +30,25 @@
     </div>
     <script type="text/javascript">
         $().ready(function () {
+            var asc = true;
+            var options = {
+                valueNames: [ 'name', 'last-name' ]
+            };
             $('.doctor-link').click(function (e) {
                 e.preventDefault();
                 $.get($(this).attr('href'),function(data){
-                    $('.patients-list').html(data)
-
+                    $('.patients-list').html(data);
+                    var patientsList = new List('patients-list', options);
+                    $('.sort').click(function(e){
+                        e.preventDefault();
+                        patientsList.sort($(this).data().sort, {asc: asc});
+                        asc=!asc
+                    });
                 });
             });
+
+
+
         });
     </script>
 {% endblock %}
