@@ -8,7 +8,7 @@ from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.template.response import TemplateResponse
 
-from medicine.forms import PatientEditForm
+from medicine.forms import PatientEditForm, DoctorForm
 from medicine.models import Hospital, Doctor
 
 
@@ -17,6 +17,7 @@ def index(request):
     template = 'index.html'
     hospitals = Hospital.objects.all()
     return render_to_response(template, {'hospitals': hospitals}, context_instance=RequestContext(request))
+
 
 @login_required
 def edit_profile(request):
@@ -35,8 +36,25 @@ def edit_profile(request):
     return TemplateResponse(request, template, {'form': form})
 
 
+@login_required
+def add_doctor(request):
+    template = 'doctor_adding_form.html'
+    #Check this in case url was typed directly in browser
+    if request.user.is_staff and request.user.is_superuser:
+        if request.method == "POST":
+            form = DoctorForm(request.POST)
+            if form.is_valid():
+                form.save()
+            else:
+                return TemplateResponse(request, template, {'form': form})
+        else:
+            form = DoctorForm()
+            return TemplateResponse(request, template, {'form': form})
+    return HttpResponseRedirect(reverse('index'))
+
+
 def ajax_patients_list(request, doctor_id):
-    template='patients_list.html'
+    template = 'patients_list.html'
     if request.is_ajax():
         patients = Doctor.objects.get(pk=doctor_id).patients.all()
         return TemplateResponse(request, template, {'patients': patients})

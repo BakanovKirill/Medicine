@@ -1,11 +1,13 @@
+from django.contrib.admin.widgets import FilteredSelectMultiple
 from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
+from django.forms import ModelMultipleChoiceField
 from django.utils.translation import ugettext_lazy as _
 from django import forms
 
 from medicine.widgets import *
-from medicine.models import Patient
+from medicine.models import Patient, Doctor, Hospital
 
 
 class PatientEditForm(forms.ModelForm):
@@ -73,3 +75,20 @@ class PatientUserCreationForm(UserCreationForm):
             'first_name',
             'last_name',
         ]
+
+
+class DoctorForm(forms.ModelForm):
+    class Meta:
+        model = Doctor
+        fields = ('name', 'surname', 'patients',)
+
+    hospitals = ModelMultipleChoiceField(
+        queryset=Hospital.objects.all(),
+        required=False,
+        widget=FilteredSelectMultiple('hospitals', False),
+        )
+
+    def save(self, *args, **kwargs):
+        super(DoctorForm, self).save(*args, **kwargs)
+        for hospital in self.cleaned_data.get('hospitals'):
+            hospital.doctors.add(self.instance)

@@ -4,6 +4,7 @@
 {% endblock %}
 {% block content %}
     <div class="content">
+    {% if request.user.is_staff and request.user.is_superuser %}You have permissions to: <a href="{% url 'add_doctor' %}">Add doctor</a><br />{% endif %}
         {% if hospitals %}
             Hospitals:
             {% for hospital in hospitals %}
@@ -30,7 +31,7 @@
     </div>
     <script type="text/javascript">
         $().ready(function () {
-            var asc = true;
+            var asc = false;
             var options = {
                 valueNames: [ 'name', 'last-name' ]
             };

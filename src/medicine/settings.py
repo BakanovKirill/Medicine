@@ -1,5 +1,6 @@
 # Django settings for medicine project.
 import os
+from django.conf import global_settings
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
@@ -123,6 +124,11 @@ INSTALLED_APPS = (
     'south',
 
     'medicine',
+)
+
+TEMPLATE_CONTEXT_PROCESSORS = global_settings.TEMPLATE_CONTEXT_PROCESSORS + (
+    'django.core.context_processors.request',
+    'django.core.context_processors.csrf',
 )
 
 LOGIN_URL = '/login/'
