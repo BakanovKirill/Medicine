@@ -1,9 +1,16 @@
 INSTALLATION
 ============
 
-Download and execute::
+Download this repo and execute bootstrap::
 
     $ python bootstrap.py
+    
+If you have errors connected with setuptools distribution, then execute::
+
+    $ pip install setuptools --upgrade
+
+Then run buildout::
+
     $ bin/buildout
 
 The above commands will download all needed packages and create database with default data loaded from fixtures.
