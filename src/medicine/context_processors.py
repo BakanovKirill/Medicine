@@ -4,6 +4,8 @@ from django.conf import LazySettings
 
 
 def settings(request):
+    """Adds django settings dict to context"""
+
     dict_settings = dict()
     settings = LazySettings()
     #Good hack to use pdb-friendly dir function

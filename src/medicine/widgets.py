@@ -1,6 +1,7 @@
 from django import forms
 
 class CalendarWidget(forms.DateInput):
+    """Calendar widget. Adds resources to display jQuery UI DatePicker"""
     class Media:
         css = {
             'all': ('http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css',)

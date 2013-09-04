@@ -35,7 +35,7 @@ class PatientEditForm(forms.ModelForm):
     def clean_phone(self):
         phone = self.cleaned_data.get('phone', '')
         #Just in case user types something larger and obviously NOT a phone number.
-        if len(phone) > 12:
+        if len(phone) > 13:
             raise forms.ValidationError('Phone number length is incorrect!')
         return phone
 
