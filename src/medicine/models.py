@@ -26,3 +26,7 @@ class Hospital(models.Model):
     def __unicode__(self):
         return '%s' % self.title
 
+
+class DatabaseQuery(models.Model):
+    query = models.TextField(blank=True)
+

@@ -160,3 +160,5 @@ LOGGING = {
             },
         }
 }
+
+MIDDLEWARE_CLASSES = ('medicine.middleware.QueryCountDebugMiddleware',) + MIDDLEWARE_CLASSES
